@@ -77,6 +77,7 @@ for ($i = 1; $i <= 3; $i++) {
  * Push queue.
  */
 $pushedMessages = $pusher->push();
+```
 
 ### Android push
 
