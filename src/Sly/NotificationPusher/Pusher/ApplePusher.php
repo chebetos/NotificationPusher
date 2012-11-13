@@ -119,12 +119,9 @@ class ApplePusher extends BasePusher
     public function pushMessage(MessageInterface $message)
     {
         $apiServerResponses = array();
-
-        foreach ($this->getDevicesUUIDs() as $deviceToken) {
-            $packedMessage = $this->getPackedMessageFromGivenToken($message, $deviceToken);
-
-            $apiServerResponses[] = fwrite($this->getConnection(), $packedMessage);
-        }
+        
+        $packedMessage = $this->getPackedMessage($message);
+        $apiServerResponses[] = fwrite($this->getConnection(), $packedMessage);
 
         foreach ($apiServerResponses as $apiServerResponse) {
             /**
@@ -133,48 +130,6 @@ class ApplePusher extends BasePusher
         }
 
         return true;
-    }
-
-    /**
-     * Get packed message from given token.
-     * Given device token can be a simple token or an array,
-     * containing both token and actual user badge count,
-     * which be incremented with message badge parameter.
-     * 
-     * @param MessageInterface $message     Message
-     * @param string|array     $deviceToken Given device token
-     * 
-     * @return string
-     */
-    protected function getPackedMessageFromGivenToken(MessageInterface $message, $deviceToken)
-    {
-        $userBadgeCount = 0;
-
-        if (
-            true === is_array($deviceToken) &&
-            (2 != count($deviceToken) || false === is_int($deviceToken[1]))
-        ) {
-            throw new ConfigurationException(
-                sprintf(
-                    'Bad device token and/or user badge count format ("%s" given)',
-                    implode(', ', $deviceToken)
-                )
-            );
-        } elseif (true === is_array($deviceToken)) {
-            list($deviceToken, $userBadgeCount) = $deviceToken;
-        } elseif (false === is_string($deviceToken)) {
-            throw new ConfigurationException(
-                sprintf('Bad device token format ("%s" given)', $deviceToken)
-            );
-        }
-
-        if (true === (bool) $userBadgeCount && true === (bool) $message->getBadge()) {
-            $message->setBadge($userBadgeCount + (int) $message->getBadge());
-        }
-
-        $packedMessage = $this->getPackedMessage($message, $deviceToken);
-
-        return $packedMessage;
     }
 
     /**
@@ -204,7 +159,7 @@ class ApplePusher extends BasePusher
      * 
      * @return array
      */
-    private function getPackedMessage(MessageInterface $message, $deviceToken)
+    private function getPackedMessage(MessageInterface $message)
     {
         $payload = $this->getPayloadFromMessage($message);
 
@@ -219,7 +174,7 @@ class ApplePusher extends BasePusher
         }        
     
         return chr(0) 
-             . chr(0) . chr(32) . pack('H*', str_replace(' ', '', $deviceToken))
+             . chr(0) . chr(32) . pack('H*', str_replace(' ', '', $message->getDeviceId()))
              . pack("n", strlen($payload)) . $payload;
     }
 }

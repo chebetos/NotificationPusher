@@ -44,13 +44,6 @@ interface BasePusherInterface
     public function getConnection();
 
     /**
-     * Get devices UUIDs.
-     *
-     * @return array
-     */
-    public function getDevicesUUIDs();
-
-    /**
      * Push.
      */
     public function push();

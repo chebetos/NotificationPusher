@@ -7,6 +7,7 @@ use Sly\NotificationPusher\Model\MessageInterface;
 class Message implements MessageInterface
 {
     protected $status;
+    protected $deviceId;
     protected $message;
     protected $alert;
     protected $sound;
@@ -17,9 +18,10 @@ class Message implements MessageInterface
     /**
      * __construct method.
      */
-    public function __construct($message = null)
+    public function __construct($deviceId, $message = null)
     {
         $this->status    = MessageInterface::STATUS_INIT;
+        $this->deviceId  = $deviceId;
         $this->message   = $message;
         $this->alert     = true;
         $this->badge     = 0;
@@ -66,6 +68,22 @@ class Message implements MessageInterface
             MessageInterface::STATUS_SENT,
             MessageInterface::STATUS_SIMULATED_SENT,
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDeviceId()
+    {
+	    return $this->deviceId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDeviceId($deviceId)
+    {
+	    $this->deviceId = $deviceId;
     }
 
     /**
