@@ -213,7 +213,7 @@ class ApplePusher extends BasePusher
     {
         if ($payload) {
             return chr(0) . chr(0) . chr(32) . pack('H*', str_replace(' ', '', $deviceToken))
-                . chr(0) . chr(strlen($payload)) . $payload;
+                . pack("n", strlen($payload)) . $payload;
         } else {
             return null;
         }
