@@ -172,11 +172,7 @@ class ApplePusher extends BasePusher
             $message->setBadge($userBadgeCount + (int) $message->getBadge());
         }
 
-        $payload = $this->getPayloadFromMessage($message);
-
-        if (null !== $payload) {
-            $packedMessage = $this->getPackedMessage($message, $deviceToken, $payload);
-        }
+        $packedMessage = $this->getPackedMessage($message, $deviceToken);
 
         return $packedMessage;
     }
@@ -205,17 +201,25 @@ class ApplePusher extends BasePusher
      * 
      * @param MessageInterface $message     Message
      * @param string           $deviceToken Device token
-     * @param string           $payload     Payload
      * 
-     * @return array|null
+     * @return array
      */
-    private function getPackedMessage(MessageInterface $message, $deviceToken, $payload = null)
+    private function getPackedMessage(MessageInterface $message, $deviceToken)
     {
-        if ($payload) {
-            return chr(0) . chr(0) . chr(32) . pack('H*', str_replace(' ', '', $deviceToken))
-                . pack("n", strlen($payload)) . $payload;
-        } else {
-            return null;
+        $payload = $this->getPayloadFromMessage($message);
+
+        if(null === $payload)
+        {
+            throw new ConfigurationException('Invalid payload for message');	        
         }
+    
+        if(strlen($payload) > 256)
+        {
+            throw new ConfigurationException('Payload exceeds APNS limits');	        
+        }        
+    
+        return chr(0) 
+             . chr(0) . chr(32) . pack('H*', str_replace(' ', '', $deviceToken))
+             . pack("n", strlen($payload)) . $payload;
     }
 }
