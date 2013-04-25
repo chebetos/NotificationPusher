@@ -2,3 +2,7 @@ bin
 composer.phar
 composer.lock
 vendor/
+.buildpath
+.project
+.settings/
+mageekguy.atoum.phar
