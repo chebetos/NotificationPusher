@@ -121,14 +121,14 @@ $pushedMessages = $pusher->push();
 
 ```
 
-## Test with Atoum
+## Test with atoum
 
-This library is using [Atoum](https://github.com/mageekguy/atoum) for unit testing,
+This library is using [atoum](https://github.com/atoum/atoum) for unit testing,
 whose Composer package can be installed with `dev` mode:
 
 ```
 php composer install --dev
-./atoum -d tests/units
+bin/atoum -d tests/units
 ```
 
 ## Complements
