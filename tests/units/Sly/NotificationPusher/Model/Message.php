@@ -26,7 +26,7 @@ class Message extends atoum\test
 
     public function testConstructWithoutMessage()
     {
-        $message = new BaseMessage();
+        $message = new BaseMessage('my_device_id');
 
         $this->assert
             ->variable($message->getMessage())->isNull()
@@ -35,9 +35,10 @@ class Message extends atoum\test
 
     public function testConstruct()
     {
-        $message = new BaseMessage('Test');
+        $message = new BaseMessage('my_device_id','Test');
 
         $this->assert
+            ->string($message->getDeviceId())->isEqualTo('my_device_id')
             ->string($message->getMessage())->isEqualTo('Test')
             ->string((string) $message)->isEqualTo('Test')
             ->string($message->getStatus())->isEqualTo(BaseMessageInterface::STATUS_INIT)
