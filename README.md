@@ -14,6 +14,18 @@ Thanks to the original author Cédric Dugat and the contribution of Michael Maro
 * PHP Curl extension - +SSL support (for AndroidPusher service)
 * PHP OpenSSL extension (for ApplePusher service)
 
+## Roadmap
+
+### Project and code quality goals
+ 
+* Test coverage greater than 90%
+* PSR-2 code compliant.
+
+### Features Roadmap
+* Send notification message in batch.
+* Support to Blackberry notification message pushing.
+* Support to Microsoft (Windows Phone) notification message pushing.
+
 ## Installation
 
 ### Add to your project Composer packages
