@@ -4,6 +4,8 @@ PHP library for easy Apple/Android notification message pushing.
 
 ## WORK IN PROGRESS.
 
+Thanks to the original author Cédric Dugat and the contribution of Michael Maroszek.
+
 [![Continuous Integration status](https://secure.travis-ci.org/chebetos/NotificationPusher.png)](http://travis-ci.org/chebetos/NotificationPusher)
 
 ## Requirements

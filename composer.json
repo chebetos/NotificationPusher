@@ -2,21 +2,17 @@
     "name": "sly/notification-pusher",
     "description": "PHP library for easy Apple/Android notification message pushing.",
     "keywords": ["apple", "iphone", "android", "notification", "message", "push", "pusher"],
-    "homepage": "https://github.com/Ph3nol/NotificationPusher",
+    "homepage": "https://github.com/chebetos/NotificationPusher",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Cédric Dugat",
-            "email": "ph3@slynett.com"
+            "name":  "César Augusto Delgado Rodríguez",
+            "email": "chebetos@gmail.com"
         }
     ],
     "require": {
         "kriswallsmith/buzz": ">= 0.6"
-    },
-    "require-dev": {
-        "atoum/atoum": "master"
-
     },
     "minimum-stability": "dev",
     "config": {
