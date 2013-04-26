@@ -6,3 +6,4 @@ vendor/
 .project
 .settings/
 mageekguy.atoum.phar
+php-cs-fixer.phar

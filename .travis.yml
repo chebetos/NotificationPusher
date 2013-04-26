@@ -10,7 +10,9 @@ before_script:
   - COMPOSER_ROOT_VERSION=dev-master php composer.phar --dev install
 
 script:
-  - php mageekguy.atoum.phar -d tests/units
+  - php mageekguy.atoum.phar -c tests/configurations/coverage.php -d tests/units
+  - tar -cZf notificationpusher-build-reports.tgz build/
+# - ftp -u ftp://chebetosbackup:CLAVE@backupspace.rimuhosting.com/notificationpusher-build-reports.tgz notificationpusher-build-reports.tgz
 
 notifications:
   email:
