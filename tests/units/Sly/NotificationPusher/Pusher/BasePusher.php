@@ -25,16 +25,6 @@ class BasePusher extends atoum\test
         ;
     }
 
-    public function testConstructWithoutDevices()
-    {
-        $this->assert
-            ->exception(function() {
-                $basePusher = new BaseBasePusher(array());
-            })
-                ->isInstanceOf('Sly\NotificationPusher\Exception\ConfigurationException')
-        ;
-    }
-
     public function testConstructWithDevices()
     {
         $basePusher = new BaseBasePusher(array(
@@ -59,39 +49,6 @@ class BasePusher extends atoum\test
             ->array($basePusherConfig)->hasKeys(array('dev', 'simulate'))
             ->boolean($basePusherConfig['dev'])->isFalse()
             ->boolean($basePusherConfig['simulate'])->isFalse()
-        ;
-    }
-
-    public function testGetDeviceUUIDs()
-    {
-        $basePusher = new BaseBasePusher(array(
-            'devices' => array('ABC', 'DEF', 'DEF', null, '', false),
-        ));
-
-        $this->assert
-            ->array($basePusher->getDevicesUUIDs())
-                ->hasSize(2)
-                ->containsValues(array('ABC', 'DEF'))
-        ;
-    }
-
-    public function testGetDeviceUUIDsWithArrays()
-    {
-        $basePusher = new BaseBasePusher(array(
-            'devices' => array(
-                array('ABC', 1),
-                array('DEF', 2),
-                array('DEF', 3),
-                array('DEF'),
-                null,
-                '',
-                false
-            ),
-        ));
-
-        $this->assert
-            ->array($basePusher->getDevicesUUIDs())
-                ->hasSize(2)
         ;
     }
 
