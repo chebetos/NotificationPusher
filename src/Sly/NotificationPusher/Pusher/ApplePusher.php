@@ -41,7 +41,7 @@ class ApplePusher extends BasePusher
 
     /**
      * Get APNS server host.
-     * 
+     *
      * @return string
      */
     protected function getApnsServerHost()
@@ -119,7 +119,7 @@ class ApplePusher extends BasePusher
     public function pushMessage(MessageInterface $message)
     {
         $apiServerResponses = array();
-        
+
         $packedMessage = $this->getPackedMessage($message);
         $apiServerResponses[] = fwrite($this->getConnection(), $packedMessage);
 
@@ -134,9 +134,9 @@ class ApplePusher extends BasePusher
 
     /**
      * Get payload from message.
-     * 
+     *
      * @param MessageInterface $message Message
-     * 
+     *
      * @return array|null
      */
     private function getPayloadFromMessage(MessageInterface $message)
@@ -153,27 +153,25 @@ class ApplePusher extends BasePusher
 
     /**
      * Get packed message.
-     * 
+     *
      * @param MessageInterface $message     Message
      * @param string           $deviceToken Device token
-     * 
+     *
      * @return array
      */
     private function getPackedMessage(MessageInterface $message)
     {
         $payload = $this->getPayloadFromMessage($message);
 
-        if(null === $payload)
-        {
-            throw new ConfigurationException('Invalid payload for message');	        
+        if (null === $payload) {
+            throw new ConfigurationException('Invalid payload for message');
         }
-    
-        if(strlen($payload) > 256)
-        {
-            throw new ConfigurationException('Payload exceeds APNS limits');	        
-        }        
-    
-        return chr(0) 
+
+        if (strlen($payload) > 256) {
+            throw new ConfigurationException('Payload exceeds APNS limits');
+        }
+
+        return chr(0)
              . chr(0) . chr(32) . pack('H*', str_replace(' ', '', $message->getDeviceId()))
              . pack("n", strlen($payload)) . $payload;
     }

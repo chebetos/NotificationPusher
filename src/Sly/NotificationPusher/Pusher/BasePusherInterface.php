@@ -4,7 +4,6 @@ namespace Sly\NotificationPusher\Pusher;
 
 use Sly\NotificationPusher\Model\Message;
 use Sly\NotificationPusher\Model\MessageInterface;
-use Sly\NotificationPusher\Collection\PushesCollection;
 
 /**
  * BasePusherInterface.
@@ -22,7 +21,7 @@ interface BasePusherInterface
 
     /**
      * Add a message.
-     * 
+     *
      * @param MessageInterface $message Message
      *
      * @return MessagesCollection
@@ -38,7 +37,7 @@ interface BasePusherInterface
 
     /**
      * Get connection.
-     * 
+     *
      * @return mixed
      */
     public function getConnection();

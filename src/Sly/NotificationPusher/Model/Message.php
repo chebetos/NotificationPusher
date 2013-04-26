@@ -31,7 +31,7 @@ class Message implements MessageInterface
 
     /**
      * __toString method.
-     * 
+     *
      * @return string
      */
     public function __toString()
@@ -75,7 +75,7 @@ class Message implements MessageInterface
      */
     public function getDeviceId()
     {
-	    return $this->deviceId;
+        return $this->deviceId;
     }
 
     /**
@@ -83,7 +83,7 @@ class Message implements MessageInterface
      */
     public function setDeviceId($deviceId)
     {
-	    $this->deviceId = $deviceId;
+        $this->deviceId = $deviceId;
     }
 
     /**

@@ -69,7 +69,7 @@ interface MessageInterface
 
     /**
       * Get alert value.
-      * 
+      *
       * @return boolean|array
       */
     public function getAlert();

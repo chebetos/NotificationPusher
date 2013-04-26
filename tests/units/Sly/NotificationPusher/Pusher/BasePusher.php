@@ -6,7 +6,6 @@ require_once __DIR__ . '/../../../../../vendor/autoload.php';
 
 use mageekguy\atoum;
 use Sly\NotificationPusher\Pusher\BasePusher as BaseBasePusher;
-use Sly\NotificationPusher\Exception\ConfigurationException;
 use Sly\NotificationPusher\Model\Message;
 
 /**

@@ -5,7 +5,6 @@ namespace Sly\NotificationPusher\Pusher;
 use Sly\NotificationPusher\Pusher\BasePusherInterface;
 use Sly\NotificationPusher\Collection\MessagesCollection;
 use Sly\NotificationPusher\Model\MessageInterface;
-use Sly\NotificationPusher\Exception\ConfigurationException;
 
 /**
  * BasePusher.
@@ -32,7 +31,7 @@ class BasePusher implements BasePusherInterface
 
     /**
      * Get default configuration.
-     * 
+     *
      * @return array
      */
     protected function getDefaultConfig()
@@ -94,8 +93,7 @@ class BasePusher implements BasePusherInterface
         foreach ($this->getMessages() as $message) {
             if (true === $this->config['simulate']) {
                 $message->setStatus(MessageInterface::STATUS_SIMULATED_SENT);
-            }
-            elseif (true === $this->pushMessage($message)) {
+            } elseif (true === $this->pushMessage($message)) {
                 $message->setStatus(MessageInterface::STATUS_SENT);
             } else {
                 $message->setStatus(MessageInterface::STATUS_FAILED);
