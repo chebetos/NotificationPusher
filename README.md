@@ -4,7 +4,7 @@ PHP library for easy Apple/Android notification message pushing.
 
 ## WORK IN PROGRESS.
 
-[![Continuous Integration status](https://secure.travis-ci.org/Ph3nol/NotificationPusher.png)](http://travis-ci.org/Ph3nol/NotificationPusher)
+[![Continuous Integration status](https://secure.travis-ci.org/chebetos/NotificationPusher.png)](http://travis-ci.org/chebetos/NotificationPusher)
 
 ## Requirements
 
@@ -16,12 +16,12 @@ PHP library for easy Apple/Android notification message pushing.
 
 ### Add to your project Composer packages
 
-Just add `sly/notification-pusher` package to the requirements of your Composer JSON configuration file,
+Just add `chebetos/notification-pusher` package to the requirements of your Composer JSON configuration file,
 and run `php composer.phar install` to install it.
 
 ### Install from GitHub
 
-Clone this library from Git with `git clone https://github.com/Ph3nol/NotificationPusher.git`.
+Clone this library from Git with `git clone https://github.com/chebetos/NotificationPusher.git`.
 
 Goto to the library directory, get Composer phar package and install vendors:
 
