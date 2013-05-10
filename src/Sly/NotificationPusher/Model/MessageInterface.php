@@ -11,6 +11,13 @@ interface MessageInterface
     const STATUS_FAILED         = 'failed';
 
     /**
+     * Get user defined data
+     * 
+     * @return array
+     */
+    public function getExtraData();
+
+    /**
       * Get Status value.
       *
       * @return string
@@ -37,6 +44,13 @@ interface MessageInterface
       * @return string
       */
     public function getMessage();
+
+    /**
+     * Set user defined data
+     * 
+     * @param array $data Array of key/values to be set as extra data
+     */
+    public function setExtraData(array $data);
 
     /**
       * Set Message value.

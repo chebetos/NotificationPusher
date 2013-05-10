@@ -13,6 +13,7 @@ class Message implements MessageInterface
     protected $badge;
     protected $createdAt;
     protected $sentAt;
+    protected $userData;
 
     /**
      * __construct method.
@@ -25,6 +26,7 @@ class Message implements MessageInterface
         $this->badge     = 0;
         $this->sound     = 'default';
         $this->createdAt = new \DateTime();
+        $this->userData  = false;
     }
 
     /**
@@ -35,6 +37,22 @@ class Message implements MessageInterface
     public function __toString()
     {
         return $this->message;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUserData()
+    {
+        return $this->userData;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUserData(array $data)
+    {
+        $this->userData = $data;
     }
 
     /**

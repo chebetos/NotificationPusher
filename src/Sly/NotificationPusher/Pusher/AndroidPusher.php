@@ -70,6 +70,9 @@ class AndroidPusher extends BasePusher
                 'message' => (string) $message,
             ),
         );
+        if ($extraData = $message->getExtraData()) {
+            $apiServerData['data'] = array_merge($apiServerData['data'], $extraData);
+        }
 
         $registrationIDsChunks = array_chunk($this->getDevicesUUIDs(), self::MAX_REGISTER_IDS_CHUNKS);
         $apiServerResponses    = array();
