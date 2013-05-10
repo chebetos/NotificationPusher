@@ -19,7 +19,6 @@ use Buzz\Client\Curl;
 class AndroidPusher extends BasePusher
 {
     const API_SERVER_HOST         = 'https://android.googleapis.com/gcm/send';
-    const MAX_REGISTER_IDS_CHUNKS = 1000;
 
     protected $apiKey;
 
@@ -41,10 +40,6 @@ class AndroidPusher extends BasePusher
         }
 
         $this->apiKey  = $this->config['apiKey'];
-
-        if (count($this->getDevicesUUIDs()) > 1000) {
-            throw new ConfigurationException('Devices UUIDs count cannot exceed 1000 entries');
-        }
     }
 
     /**
@@ -74,43 +69,34 @@ class AndroidPusher extends BasePusher
             $apiServerData['data'] = array_merge($apiServerData['data'], $userData);
         }
 
-        $registrationIDsChunks = array_chunk($this->getDevicesUUIDs(), self::MAX_REGISTER_IDS_CHUNKS);
-        $apiServerResponses    = array();
+        $apiServerData['registration_ids'] = Array($message->getDeviceId());
 
-        foreach ($registrationIDsChunks as $registrationIDs) {
-            $apiServerData['registration_ids'] = $registrationIDs;
+        $apiServerResponse = $this->getConnection()->post(
+            self::API_SERVER_HOST,
+            $headers,
+            json_encode($apiServerData)
+        );
 
-            $apiServerResponse = $this->getConnection()->post(
-                self::API_SERVER_HOST,
-                $headers,
-                json_encode($apiServerData)
+        $apiServerResponseHeaders = $apiServerResponse->getHeaders();
+
+        if ('HTTP/1.1 401 Unauthorized' == $apiServerResponseHeaders[0]) {
+            throw new ConfigurationException(
+                'Authorization problem, check your app parameters from your Google API Console'
             );
-
-            $apiServerResponseHeaders = $apiServerResponse->getHeaders();
-
-            if ('HTTP/1.1 401 Unauthorized' == $apiServerResponseHeaders[0]) {
-                throw new ConfigurationException(
-                    'Authorization problem, check your app parameters from your Google API Console'
-                );
-            }
-
-            $apiServerResponses[] = $apiServerResponse;
         }
 
-        foreach ($apiServerResponses as $apiServerResponse) {
-            $apiServerResponse = json_decode($apiServerResponse->getContent());
+        $apiServerResponse = json_decode($apiServerResponse->getContent());
 
-            if (true === (bool) $apiServerResponse->failure) {
-                $apiServerErrors = array();
+        if (true === (bool) $apiServerResponse->failure) {
+            $apiServerErrors = array();
 
-                foreach ($apiServerResponse->results as $result) {
-                    $apiServerErrors[] = $result->error;
-                }
-
-                throw new RuntimeException(
-                    sprintf('API server has returned error(s): "%s"', implode(' / ', $apiServerErrors))
-                );
+            foreach ($apiServerResponse->results as $result) {
+                $apiServerErrors[] = $result->error;
             }
+
+            throw new RuntimeException(
+                sprintf('API server has returned error(s): "%s"', implode(' / ', $apiServerErrors))
+            );
         }
 
         return true;

@@ -39,6 +39,20 @@ interface MessageInterface
     public function getSentStatuses();
 
     /**
+      * Get DeviceId value.
+      *
+      * @return string
+      */
+    public function getDeviceId();
+
+    /**
+      * Set DeviceId value.
+      *
+      * @param string $deviceId DeviceId value to set
+      */
+    public function setDeviceId($deviceId);
+
+    /**
       * Get Message value.
       *
       * @return string

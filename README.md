@@ -53,15 +53,19 @@ $pusher = new ApplePusher(array(
     'dev'                    => true,                             // Developer/Sandbox mode enabled (default: false)
     'simulate'               => false,                            // Simulate sendings (default: false)
     'certificate'            => '/path/to/your/certificate.pem',
-    'certificate_passphrase' => 'myPassPhrase',                   // Generated certificate passphrase (if needed)
-    'devices'                => array('D3v1c3T0k3n1', 'D3v1c3T0k3n2', 'D3v1c3T0k3n3'), // Apple Device Tokens
+    'certificate_passphrase' => 'myPassPhrase'                    // Generated certificate passphrase (if needed)
 ));
+
+/** 
+ * Specify some device tokens
+ */
+$devices = array('D3v1c3T0k3n1', 'D3v1c3T0k3n2', 'D3v1c3T0k3n3'), // Apple Device Tokens   
 
 /**
  * Add some test pushes.
  */
 for ($i = 1; $i <= 3; $i++) {
-    $message = new Message(sprintf('This is Test #%d', $i));
+    $message = new Message($devices[$i], sprintf('This is Test #%d', $i));
     // $message->setAlert(false);           // Don't display message
     // $message->setBadge(5);               // Increment users badges with '5'
     // $message->setSound('bingbong.aiff'); // Set specific sound
@@ -74,26 +78,6 @@ for ($i = 1; $i <= 3; $i++) {
  */
 $pushedMessages = $pusher->push();
 ```
-
-To manage users badges, we can pass a specific array to the pusher service (instead of passing an array of tokens).
-This array contains 2 informations: the device token and the actual user badge count. Here is an example of
-an ApplePusher service instance:
-
-``` php
-$pusher = new ApplePusher(array(
-    'dev'                    => true,                             // Developer/Sandbox mode enabled (default: false)
-    'simulate'               => false,                            // Simulate sendings (default: false)
-    'certificate'            => '/path/to/your/certificate.pem',
-    'devices'                => array(
-        array('D3v1c3T0k3n1', 0), // User 1 has a '0' badge count
-        array('D3v1c3T0k3n2', 5), // User 2 has a '5' badge count
-        array('D3v1c3T0k3n3', 2), // User 3 has a '2' badge count
-        // ...
-    ),
-));
-```
-
-Each user badge count will be incremented with the Message object badge parameter.
 
 ### Android push
 
@@ -112,15 +96,20 @@ use Sly\NotificationPusher\Pusher\AndroidPusher;
  */
 $pusher = new AndroidPusher(array(
     'applicationID' => '123456789012', // Your Google project application ID
-    'apiKey'        => 'y0ur4p1k3y',   // Your Google account project API key
-    'devices'       => array('D3v1c3T0k3n1', 'D3v1c3T0k3n2', 'D3v1c3T0k3n3'), // Android register IDs
+    'apiKey'        => 'y0ur4p1k3y'    // Your Google account project API key
 ));
+
+/** 
+ * Specify some device tokens
+ */
+$devices = array('D3v1c3T0k3n1', 'D3v1c3T0k3n2', 'D3v1c3T0k3n3'), // Android register IDs
+
 
 /**
  * Add some test pushes.
  */
 for ($i = 1; $i <= 3; $i++) {
-    $message = new Message(sprintf('This is Test #%d', $i));
+    $message = new Message($devices[$i], sprintf('This is Test #%d', $i));
 
     $pusher->addMessage($message);
 }

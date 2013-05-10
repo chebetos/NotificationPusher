@@ -17,7 +17,6 @@ class BasePusher implements BasePusherInterface
 {
     protected $config;
     protected $connection;
-    protected $devicesUUIDs;
     protected $messages;
 
     /**
@@ -29,12 +28,6 @@ class BasePusher implements BasePusherInterface
     {
         $this->config   = array_merge($this->getDefaultConfig(), $config);
         $this->messages = new MessagesCollection();
-
-        if (empty($this->config['devices']) || null === $this->config['devices']) {
-            throw new ConfigurationException('You must give an array of devices UUIDs to the pusher');
-        }
-
-        $this->devicesUUIDs = $this->config['devices'];
     }
 
     /**
@@ -87,27 +80,6 @@ class BasePusher implements BasePusherInterface
         }
 
         return $this->connection;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDevicesUUIDs()
-    {
-        $devicesUUIDs     = array_filter($this->devicesUUIDs);
-        $devicesContainer = array();
-
-        foreach ($devicesUUIDs as $k => $dID) {
-            if (true === is_array($dID) && false === in_array($dID[0], $devicesContainer)) {
-                $devicesContainer[] = $dID[0];
-            } elseif (true === is_string($dID) && false === in_array($dID, $devicesContainer)) {
-                $devicesContainer[] = $dID;
-            } else {
-                unset($devicesUUIDs[$k]);
-            }
-        }
-
-        return $devicesUUIDs;
     }
 
     /**
