@@ -86,6 +86,9 @@ class ApplePusher extends BasePusher
             );
         }
 
+        stream_set_blocking($connection, 0);
+        stream_set_write_buffer($connection, 0);
+
         return $connection;
     }
 
