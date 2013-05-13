@@ -15,7 +15,7 @@ interface MessageInterface
      * 
      * @return array
      */
-    public function getExtraData();
+    public function getUserData();
 
     /**
       * Get Status value.
@@ -64,7 +64,7 @@ interface MessageInterface
      * 
      * @param array $data Array of key/values to be set as extra data
      */
-    public function setExtraData(array $data);
+    public function setUserData(array $data);
 
     /**
       * Set Message value.
